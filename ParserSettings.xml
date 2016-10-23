@@ -2,6 +2,7 @@
 <ParseSettings>
 	<urls>
 		<url>http://www.sherdog.com/rss/news.xml</url>
+		<url>http://www.sherdog.com/rss/articles.xml</url>
 	</urls>
 	<lastDate>9</lastDate>
 </ParseSettings>

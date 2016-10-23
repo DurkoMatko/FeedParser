@@ -1,0 +1,17 @@
+from xml.dom import minidom      #get parse settings - lastDate, URLs
+
+class SettingsReader:
+   filename = ""
+   xmldoc = ""
+
+   def __init__(filename):
+      self.filename = filename
+
+   def parseXML():
+      self.xmldoc = minidom.parse('/home/martin/Documents/Python_Crawler/ParserSettings.xml')
+
+   def getFeedURLs():
+      urls = xmldoc.getElementsByTagName('urls')[0]
+      urlList = urls.getElementsByTagName("url")
+      return urlList
+
