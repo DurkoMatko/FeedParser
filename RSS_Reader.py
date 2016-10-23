@@ -27,7 +27,7 @@ class RSS_Reader:
       for item in self.feedData['items']:
          dt = parser.parse(item.published)      #parse unicode to datatime format
          dt = dt.astimezone(tz.tzutc())         #set it to my timezone perspective
-         if(yesterday < datetime.datetime(dt.year,dt.month,dt.day,dt.hour,dt.minute,dt.second)):      #compare yesterday and article title in no-aware timezone datatime format
+         if(yesterday < datetime.datetime(dt.year,dt.month,dt.day+1,dt.hour,dt.minute,dt.second)):      #compare yesterday and article title in no-aware timezone datatime format
             articleList.append((item.link,item.title,item.description))
             
       return articleList
