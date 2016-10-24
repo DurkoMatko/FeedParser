@@ -13,7 +13,7 @@ class RSS_Reader:
 
 # Parse the feed from URL
    def parseFeed(self):
-      print self.feed_url
+      #print self.feed_url
       self.feedData = feedparser.parse(self.feed_url)
 
    def filterNewArticles(self,lastDate):

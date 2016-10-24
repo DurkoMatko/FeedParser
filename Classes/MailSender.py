@@ -37,7 +37,7 @@ class MailSender:
       if(msg):
          self.smtpserver.sendmail(self.gmail_user, self.to, msg.as_string())
 
-      print 'done!'
+      #print 'done!'
       self.smtpserver.close()
       
    def createMessage(self,urlList,lastDate):
