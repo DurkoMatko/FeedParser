@@ -1,21 +1,23 @@
 # -*- coding: utf-8 -*-
 
-from SettingsReader import SettingsReader
-from MailSender import MailSender
+import sys
+from Classes.SettingsReader import SettingsReader
+from Classes.MailSender import MailSender
 
 #create xml reader class and get feed URLs to be crawled
-settingsReader = SettingsReader('/home/martin/Documents/Python_Crawler/ParserSettings.xml')
-settingsReader.parseXML()
-urlList = settingsReader.getFeedURLs()
-lastDate = settingsReader.getLastDate()
+def main(argv):
+	settingsReader = SettingsReader("/home/martin/Documents/Python_Crawler/ParserSettings.xml")
+	settingsReader.parseXML()
+	urlList = settingsReader.getFeedURLs()
+	lastDate = settingsReader.getLastDate()
 
-mailsender = MailSender()
-mailsender.sendMail(urlList,lastDate)
+	mailsender = MailSender()
+	mailsender.sendMail(urlList,lastDate)
+	pass
 
 
-
-
-
+if __name__ == "__main__":
+    main(sys.argv)
 
 
 
