@@ -30,13 +30,13 @@ class MailSender:
       self.smtpserver.ehlo
       self.smtpserver.login(self.gmail_user, self.gmail_pwd)
 
-   def sendMail(self,urlList):
-      msg = self.createMessage(urlList)
+   def sendMail(self,urlList,lastDate):
+      msg = self.createMessage(urlList,lastDate)
       self.smtpserver.sendmail(self.gmail_user, self.to, msg.as_string())
       print 'done!'
       self.smtpserver.close()
       
-   def createMessage(self,urlList):
+   def createMessage(self,urlList,lastDate):
       # Create message container - the correct MIME type is multipart/alternative.
       msg = MIMEMultipart('alternative')
       msg['Subject'] = "html test"
@@ -53,7 +53,7 @@ class MailSender:
          #rss feed parsing
          rssReader = RSS_Reader(url.firstChild.data)
          rssReader.parseFeed()
-         articleList = rssReader.filterNewArticles()        #articleList is triple of (link,title,description)
+         articleList = rssReader.filterNewArticles(lastDate)        #articleList is triple of (link,title,description)
 
          #add each new article to both text and html form
          for (link,title,description) in articleList:
