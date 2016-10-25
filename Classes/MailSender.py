@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import sys           #encoding
+import email, imaplib      #deleting sent mails from sent folder
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
@@ -36,9 +37,12 @@ class MailSender:
       #if msg is not false, then send it
       if(msg):
          self.smtpserver.sendmail(self.gmail_user, self.to, msg.as_string())
+         #delete mails from sent folder - so it's only in INBOX
+         self.cleanSentFolder()     
 
-      #print 'done!'
       self.smtpserver.close()
+
+      
       
    def createMessage(self,urlList,lastDate):
       # Create message container - the correct MIME type is multipart/alternative.
@@ -82,4 +86,31 @@ class MailSender:
       else:
          return False
 
+
+   def cleanSentFolder(self):
+      m = imaplib.IMAP4_SSL("imap.gmail.com",993)
+      m.login(self.gmail_user,self.gmail_pwd)
+
+      # select Sent folder - name is in slovak
+      status,msg = m.select('[Gmail]/Odoslan&AOk-')     
+
+      if(status == 'OK'):
+         #get all sent messages and then extract Message-ID of the newest one - not UID!
+         result, data = m.uid('search', None, "ALL") # search and return uids 
+         latest_email_uid = data[0].split()[-1]
+         result, data = m.uid('fetch', latest_email_uid, '(RFC822)')
+
+         if(result == 'OK'):
+            splitData = data[0][0].split(" ")
+            messageId = splitData[0]
+            #delete message using its Message-ID
+            m.store(messageId,'+FLAGS', '\\Deleted')
+            m.expunge()    
+
+      m.logout()
+
+
+   def getMailIdBySubject(self,m,subject):
+      result, data = m.uid('search', None, '(HEADER Subject "' + subject + '")')
+      return data
 

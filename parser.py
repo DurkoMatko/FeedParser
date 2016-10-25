@@ -4,6 +4,9 @@ import sys
 from Classes.SettingsReader import SettingsReader
 from Classes.MailSender import MailSender
 
+reload(sys)
+sys.setdefaultencoding('utf8')
+
 #create xml reader class and get feed URLs to be crawled
 def main(argv):
 	settingsReader = SettingsReader("/home/martin/Documents/Python_Crawler/ParserSettings.xml")
