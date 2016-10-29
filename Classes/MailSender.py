@@ -6,6 +6,7 @@ import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from Classes.RSS_Reader import RSS_Reader
+from urlparse import urlparse
 
 reload(sys)
 sys.setdefaultencoding('utf8')
@@ -51,16 +52,20 @@ class MailSender:
       msg['From'] = self.gmail_user
       msg['To'] = self.to
 
-      text = "\n There are some new articles for you to read on Sherdog.com\n\n"
+      text = "\n Your daily feed is here!\n\n"
       html = """<html><head></head>
                   <body>
-                     <h2><br> There are some new articles for you to read on Sherdog.com <br><br></h2>"""
+                     <h2><br> Your daily feed is here! <br><br></h2>"""
 
       #flag to detect if at least some articles are new
       newArticles = False
 
       #for each URL specified in config settings parse feed and send mail about new articles
       for url in urlList:
+         #add URL name to mail as a title
+         domain =  self.getDomainFromURL(url.firstChild.data)
+         text = text + '\n\n' + domain;
+         html = html + """<br><br><h3>""" + domain + """</h3><br>"""
          #rss feed parsing
          rssReader = RSS_Reader(url.firstChild.data)
          rssReader.parseFeed()
@@ -113,4 +118,9 @@ class MailSender:
    def getMailIdBySubject(self,m,subject):
       result, data = m.uid('search', None, '(HEADER Subject "' + subject + '")')
       return data
+
+   def getDomainFromURL(self,url):
+      parsed_uri = urlparse( url )
+      domain = '{uri.scheme}://{uri.netloc}/'.format(uri=parsed_uri)
+      return domain
 
