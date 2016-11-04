@@ -18,6 +18,15 @@ After crontab opens, add this line to add job which will run the script at 8pm e
 
 ```
 
+Config file with gmail login details needs to be present in project folder
+```txt
+[GmailConfig]
+to=nitramdurcek@gmail.com
+from=nitramdurcek@gmail.com
+from_password=***********
+
+```
+
 ####Used Modules
 
 * <b> smtplib </b>- to send mail
@@ -27,5 +36,6 @@ After crontab opens, add this line to add job which will run the script at 8pm e
 * <b> xml.dom.minidom </b> - parsing XML to read settings
 * <b> datetime </b> - time comparison
 * <b> sys </b> - UTF-8 encoding
+* <b> ConfigParser </b> - parsing config file
 
 

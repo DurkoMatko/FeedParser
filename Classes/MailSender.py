@@ -3,6 +3,7 @@
 import sys           #encoding
 import email, imaplib      #deleting sent mails from sent folder
 import smtplib
+import ConfigParser        #parsing config file
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from Classes.RSS_Reader import RSS_Reader
@@ -20,9 +21,11 @@ class MailSender:
 
    def __init__(self):
       #specify acounts
-      self.to = 'nitramdurcek@gmail.com'
-      self.gmail_user = 'nitramdurcek@gmail.com'
-      self.gmail_pwd = 'Pipkon$viem59'
+      configParser = ConfigParser.ConfigParser()
+      configParser.readfp(open(r'mailCredentials.config'))
+      self.to = configParser.get('GmailConfig','to')
+      self.gmail_user = configParser.get('GmailConfig','from')
+      self.gmail_pwd = configParser.get('GmailConfig','from_password')
       self.smtpserver = smtplib.SMTP("smtp.gmail.com",587)
       self.login()
 
@@ -48,7 +51,7 @@ class MailSender:
    def createMessage(self,urlList,lastDate):
       # Create message container - the correct MIME type is multipart/alternative.
       msg = MIMEMultipart('alternative')
-      msg['Subject'] = "html test"
+      msg['Subject'] = "Daily feed"
       msg['From'] = self.gmail_user
       msg['To'] = self.to
 

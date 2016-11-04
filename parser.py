@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import sys
+import ConfigParser        #parsing config file
 from Classes.SettingsReader import SettingsReader
 from Classes.MailSender import MailSender
 
