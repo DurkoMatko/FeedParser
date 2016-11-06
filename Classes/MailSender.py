@@ -3,6 +3,7 @@
 import sys           #encoding
 import email, imaplib      #deleting sent mails from sent folder
 import smtplib
+import os                  ##getting path
 import ConfigParser        #parsing config file
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
@@ -22,7 +23,7 @@ class MailSender:
    def __init__(self):
       #specify acounts
       configParser = ConfigParser.ConfigParser()
-      configParser.readfp(open(r'mailCredentials.config'))
+      configParser.readfp(open(os.path.dirname(os.path.abspath(__file__))+"/mailCredentials.config"))
       self.to = configParser.get('GmailConfig','to')
       self.gmail_user = configParser.get('GmailConfig','from')
       self.gmail_pwd = configParser.get('GmailConfig','from_password')

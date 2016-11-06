@@ -1,10 +1,11 @@
 # FeedParser
 
-Parses feeds from URLs specified in ParserSettings.xml and sends new articles to mail address (addresses are in MailSender class)<br>
+Parses feeds from URLs specified in ParserSettings.xml and sends new articles via <br>
+
+To find config and settings file, path to directory must be added to PATH:
+
 
 To automate this process in ubuntu
-
-
 
 ```shell
 sudo crontab –e
@@ -27,6 +28,8 @@ from_password=***********
 
 ```
 
+
+
 ####Used Modules
 
 * <b> smtplib </b>- to send mail
@@ -37,5 +40,6 @@ from_password=***********
 * <b> datetime </b> - time comparison
 * <b> sys </b> - UTF-8 encoding
 * <b> ConfigParser </b> - parsing config file
+* <b> os </b> - getting absolute path of files
 
 
